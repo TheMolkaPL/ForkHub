@@ -19,11 +19,12 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 
 /**
  * Helper to display a confirmation dialog
@@ -64,17 +65,16 @@ public class ConfirmDialogFragment extends DialogFragmentHelper implements
         show(activity, new ConfirmDialogFragment(), arguments, TAG);
     }
 
+    @NonNull
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
-        AlertDialog dialog = LightAlertDialog.create(getActivity());
-        dialog.setTitle(getTitle());
-        dialog.setMessage(getMessage());
-        dialog.setButton(BUTTON_POSITIVE,
-                getResources().getString(android.R.string.yes), this);
-        dialog.setButton(BUTTON_NEGATIVE,
-                getResources().getString(android.R.string.no), this);
-        dialog.setCancelable(true);
-        dialog.setOnCancelListener(this);
-        return dialog;
+        return new AlertDialog.Builder(getActivity())
+                .setTitle(getTitle())
+                .setMessage(getMessage())
+                .setPositiveButton(getResources().getString(android.R.string.yes), this)
+                .setNegativeButton(getResources().getString(android.R.string.no), this)
+                .setCancelable(true)
+                .setOnCancelListener(this)
+                .create();
     }
 
     @Override
