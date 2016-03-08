@@ -8,16 +8,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <FrameLayout
-            style="@style/ListItem"
-            android:layout_width="match_parent" >
-
-            <TextView
-                style="@style/ListTitleText"
-                android:text="@string/diff_line_message"
-                android:textStyle="normal" />
-        </FrameLayout>
-
         <View style="@style/Separator" />
 
         <LinearLayout
@@ -58,6 +48,8 @@
                 style="@style/ListSubtitleText"
                 android:singleLine="true" />
         </LinearLayout>
+
+        <View style="@style/Separator" />
     </LinearLayout>
 
 </ScrollView>

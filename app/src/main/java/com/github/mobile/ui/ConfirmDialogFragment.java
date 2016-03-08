@@ -72,7 +72,6 @@ public class ConfirmDialogFragment extends DialogFragmentHelper implements
                 .setMessage(getMessage())
                 .setPositiveButton(getResources().getString(android.R.string.yes), this)
                 .setNegativeButton(getResources().getString(android.R.string.no), this)
-                .setCancelable(true)
                 .setOnCancelListener(this)
                 .create();
     }

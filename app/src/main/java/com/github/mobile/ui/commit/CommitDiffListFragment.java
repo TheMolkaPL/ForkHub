@@ -23,7 +23,6 @@ import static com.github.mobile.Intents.EXTRA_COMMENT;
 import static com.github.mobile.Intents.EXTRA_REPOSITORY;
 import static com.github.mobile.RequestCodes.COMMENT_CREATE;
 import android.accounts.Account;
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -31,6 +30,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -419,9 +419,18 @@ public class CommitDiffListFragment extends DialogFragment implements
 
     private void showFileOptions(CharSequence line, final int position,
             final CommitFile file) {
-        final AlertDialog dialog = LightAlertDialog.create(getActivity());
-        dialog.setTitle(CommitUtils.getName(file));
-        dialog.setCanceledOnTouchOutside(true);
+
+        final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle(CommitUtils.getName(file))
+                .setMessage(getActivity().getString(R.string.diff_line_message))
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
 
         View view = getActivity().getLayoutInflater().inflate(
                 R.layout.diff_line_dialog, null);
@@ -457,13 +466,6 @@ public class CommitDiffListFragment extends DialogFragment implements
                 });
 
         dialog.setView(view);
-        dialog.setButton(BUTTON_NEGATIVE, getString(R.string.cancel),
-                new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
         dialog.show();
     }
 

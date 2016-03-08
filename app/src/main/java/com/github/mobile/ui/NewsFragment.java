@@ -20,10 +20,10 @@ import static android.content.Intent.CATEGORY_BROWSABLE;
 import static org.eclipse.egit.github.core.event.Event.TYPE_COMMIT_COMMENT;
 import static org.eclipse.egit.github.core.event.Event.TYPE_DOWNLOAD;
 import static org.eclipse.egit.github.core.event.Event.TYPE_PUSH;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -138,9 +138,9 @@ public abstract class NewsFragment extends PagedItemFragment<Event> {
         final User user = event.getActor();
 
         if (repo != null && user != null) {
-            final AlertDialog dialog = LightAlertDialog.create(getActivity());
-            dialog.setTitle(R.string.navigate_to);
-            dialog.setCanceledOnTouchOutside(true);
+            final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.navigate_to)
+                    .create();
 
             View view = getActivity().getLayoutInflater().inflate(
                     R.layout.nav_dialog, null);
@@ -165,6 +165,7 @@ public abstract class NewsFragment extends PagedItemFragment<Event> {
                     viewRepository(repo);
                 }
             });
+
             dialog.setView(view);
             dialog.show();
 
